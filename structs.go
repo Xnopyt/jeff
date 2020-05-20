@@ -14,6 +14,12 @@ type Session struct {
 	}
 }
 
+//Message - A message object that implements *discordgo.Message, but with jeff methods
+type Message struct {
+	*discordgo.Message
+	session *Session
+}
+
 //ParsedCommand - A parsed command
 type ParsedCommand struct {
 	Flags   []string
@@ -25,7 +31,7 @@ type ParsedCommand struct {
 }
 
 //CommandHandler - A function to handle a parsed command
-type CommandHandler func(s *Session, m *discordgo.Message, c ParsedCommand)
+type CommandHandler func(s *Session, m *Message, c ParsedCommand)
 
 type command struct {
 	cmd     string
@@ -49,3 +55,6 @@ var ErrCmdContainsIllegalChars = &InternalError{"The command, subcommand or flag
 
 //ErrCmdArgsNotUnique is the error for when a flag and subcommand share the same name
 var ErrCmdArgsNotUnique = &InternalError{"The flags and subcommands must all be unique."}
+
+//ErrMessageSessionNil is the error when the session linked to a message is a nil pointer
+var ErrMessageSessionNil = &InternalError{"The session linked to the message is a nil pointer."}

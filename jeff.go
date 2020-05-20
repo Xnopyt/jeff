@@ -219,5 +219,15 @@ func commandParser(s *discordgo.Session, m *discordgo.MessageCreate) {
 		break
 	}
 
-	cmd.handler(ses, m.Message, pcmd)
+	cmd.handler(ses, &Message{Message: m.Message, session: ses}, pcmd)
+}
+
+//Reply - Send a reply to message
+func (m *Message) Reply(msg string) (*Message, error) {
+	if m.session == nil {
+		return nil, ErrMessageSessionNil
+	}
+
+	x, err := m.session.ChannelMessageSend(m.ChannelID, msg)
+	return &Message{Message: x, session: m.session}, err
 }
