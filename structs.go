@@ -22,6 +22,7 @@ type Message struct {
 
 //ParsedCommand - A parsed command
 type ParsedCommand struct {
+	Cmd     string
 	Flags   []string
 	Subcmds []struct {
 		Cmd string

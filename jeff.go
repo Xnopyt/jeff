@@ -137,6 +137,8 @@ func commandParser(s *discordgo.Session, m *discordgo.MessageCreate) {
 		}
 	}
 
+	pcmd.Cmd = split[0]
+
 	split = append(split[:0], split[1:]...)
 
 	if !test {
